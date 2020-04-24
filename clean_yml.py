@@ -4,19 +4,37 @@ import yaml
 
 
 def walk_files(folder_path):
-    for root, dirs, files in os.walk(folder_path):
+    for root, _, files in os.walk(folder_path):
         for name in files:
             if name.endswith(".yml") or name.endswith(".yaml"):
                 clean_yaml(os.path.join(root, name))
 
 
 def clean_dict(d):
-    remove = ["annotations", "strategy", "progressDeadlineSeconds", "revisionHistoryLimit", "terminationMessagePath", "terminationMessagePolicy", "dnsPolicy", "restartPolicy", "schedulerName", "securityContext", "terminationGracePeriodSeconds", "creationTimestamp", "resourceVersion", "selfLink", "uid", "status", "generation"]  # noqa
+    remove = [
+        "annotations",
+        "strategy",
+        "progressDeadlineSeconds",
+        "revisionHistoryLimit",
+        "terminationMessagePath",
+        "terminationMessagePolicy",
+        "dnsPolicy",
+        "restartPolicy",
+        "schedulerName",
+        "securityContext",
+        "terminationGracePeriodSeconds",
+        "creationTimestamp",
+        "resourceVersion",
+        "selfLink",
+        "uid",
+        "status",
+        "generation",
+    ]  # noqa
     if "image" in d:
         d["image"] = "{{IMAGE}}"
     for r in remove:
         d.pop(r, None)
-    for k, v in d.items():
+    for _, v in d.items():
         if type(v) == dict:
             clean_dict(v)
 
