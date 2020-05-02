@@ -12,4 +12,5 @@ func main() {
 		fmt.Println(unixnow - t)
 		t = unixnow
 	}
+
 }
