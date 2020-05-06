@@ -1,7 +1,7 @@
 git filter-branch --commit-filter '
-if [ "GIT_AUTHOR_EMAIL" = "gang.wang@shanbay.com" ];
+if [ "GIT_AUTHOR_EMAIL" = "gukz@qq.com" ];
 then
-    GIT_AUTHOR_EMAIL="gukz@qq.com";
+    GIT_AUTHOR_EMAIL="1685605435@qq.com";
     GIT_AUTHOR_NAME="gukz";
     git commit-tree "$@";
 else
