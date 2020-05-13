@@ -1,7 +1,6 @@
 import grpc
-from protos.octopus.octopus_pb2_grpc import OctopusStub
-from protos.octopus import octopus_pb2
-from protos.
+from protos.octopus_pb2_grpc import OctopusStub
+from protos import octopus_pb2
 
 
 class Stub:
@@ -14,9 +13,9 @@ class Stub:
 
 
 if __name__ == "__main__":
-    stub = Stub("127.0.0.1", "10003", "bayuser-rpc.xyz", OctopusStub)
-    #  req = octopus_pb2.CreateServiceReq(service_name="postman-rpc.xyz")
+    stub = Stub("127.0.0.1", "10003", "codetime-rpc.codetime", OctopusStub)
+    #  req = octopus_pb2.CreateServiceReq(service_name="codetime-rpc.codetime")
     #  res = stub.CreateService(req)
-    #  req = octopus_pb2.GetServiceReq(service_name="postman-rpc.xyz")
-    #  res = stub.GetService(req)
+    req = octopus_pb2.GetServiceReq(service_name="codetime-rpc.codetime")
+    res = stub.GetService(req)
     print(res)
