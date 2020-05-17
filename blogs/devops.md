@@ -19,7 +19,6 @@ id=7863 addr=172.18.0.104:56836 fd=6150 name= age=72 idle=72 flags=N db=0 sub=0 
 id=7864 addr=172.18.0.50:56262 fd=6151 name= age=72 idle=72 flags=N db=9 sub=0 psub=0 multi=-1 qbuf=0 qbuf-free=0 obl=0 oll=0 omem=0 events=r cmd=ping
 id=7865 addr=172.18.0.104:56840 fd=6152 name= age=72 idle=72 flags=N db=0 sub=0 psub=0 multi=-1 qbuf=0 qbuf-free=0 obl=0 oll=0 omem=0 events=r cmd=ping
 ...
-
 ```
 
 > 分析所有客户端连接信息
