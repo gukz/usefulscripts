@@ -48,5 +48,5 @@ func main() {
 	b := map[int]*string{}
 	c := "hello"
 	b[1] = &c
-	fmt.Println(b)
+	fmt.Printf("%w\n", b)
 }
