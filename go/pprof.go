@@ -3,49 +3,41 @@ package main
 import (
 	"fmt"
 	"os"
-	"runtime"
-	"runtime/pprof"
+	"runtime/trace"
+	"time"
 )
-
-var (
-	cpuProfile     = "cpu_profile"
-	memProfile     = "mem_profile"
-	memProfileRate = 10
-)
-
-func startCPUProfile() {
-	f, err := os.Create(cpuProfile)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Can not create cpu profile output file: %s", err)
-		return
-	}
-	if err := pprof.StartCPUProfile(f); err != nil {
-		fmt.Fprintf(os.Stderr, "Can not start cpu profile: %s", err)
-		f.Close()
-		return
-	}
-}
-
-func stopCPUProfile() {
-	pprof.StopCPUProfile()
-}
-
-func startMemProfile() {
-	runtime.MemProfileRate = memProfileRate
-}
-
-func stopMemProfile() {
-	f, err := os.Create(memProfile)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Can not create mem profile output files: %s", err)
-		return
-	}
-	if err = pprof.WriteHeapProfile(f); err != nil {
-		fmt.Fprintf(os.Stderr, "Can not write %s: %s", memProfile, err)
-	}
-	f.Close()
-}
 
 func main() {
-	fmt.Println("test")
+	trace.Start(os.Stderr)
+	defer trace.Stop()
+
+	ch := make(chan string, 2)
+	for i := 0; i < 100; i++ {
+		go func() {
+			for {
+				select {
+				case <-time.After(5 * time.Second):
+					break
+				case ch <- "value":
+
+				}
+				time.Sleep(20 * time.Millisecond)
+			}
+		}()
+	}
+	for i := 0; i < 10; i++ {
+		go func() {
+			for {
+				select {
+				case val, ok := <-ch:
+					if ok {
+						fmt.Println(val)
+					} else {
+						return
+					}
+				}
+			}
+		}()
+	}
+	time.Sleep(10 * time.Second)
 }
