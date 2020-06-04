@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 protos/
+.DS_Store
+*.json
+*.out
+*.log
 
 # C extensions
 *.so
