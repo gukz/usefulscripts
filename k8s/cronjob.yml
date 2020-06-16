@@ -1,0 +1,19 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: auto-clear-apm-index
+  namespace: guardian
+spec:
+  schedule: "0 19 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: app
+            image: alpine:3.11
+            args:
+            - /bin/sh
+            - -c
+            - apk add curl; curl --user elastic:pwd -XDELETE "http://es-xxxxxxxxxxxxxxxxxxxx.elasticsearch.aliyuncs.com:9200/some-index*"
+          restartPolicy: Never
