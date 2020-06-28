@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: guardian
+  name: redis-exporter
+spec:
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9121"
+      labels:
+        app: redis-exporter
+    spec:
+      containers:
+      - name: exporter
+        image: oliver006/redis_exporter:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        env:
+        - name: REDIS_ADDR
+          value: "r-xxxxxxxxxxxxxxxxxx.redis.rds.aliyuncs.com:6379"
+        - name: REDIS_USER
+          value: "xxxxxx"
+        - name: REDIS_PASSWORD
+          value: "xxxxxx"
+        ports:
+        - containerPort: 9121

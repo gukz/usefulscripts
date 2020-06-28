@@ -15,7 +15,7 @@ class Stub:
 
 if __name__ == "__main__":
     # k port-forward krake-v2-b74f59c86-6cccd 10003:10003 -n mesh
-    services = ""
+    services = "readingoperation-api.cuckoo"
     stub = Stub("127.0.0.1", "10003", OctopusStub)
     res = dict()
     for s in services.split("\n"):
