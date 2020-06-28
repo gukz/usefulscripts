@@ -63,7 +63,7 @@ func serve(concurrency int) {
 	for {
 		select {
 		case msg, open := <-messagePool:
-			if !open {
+			if !open && msg == "" {
 				goto STOP
 			}
 			<-pool
