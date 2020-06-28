@@ -32,22 +32,7 @@ func workFunc(msg string) error {
 
 func serve(concurrency int) {
 	quitSignal := make(chan struct{})
-	messagePool := make(chan string, 1)
 	var wg sync.WaitGroup
-	go func() {
-		for {
-			select {
-			case <-quitSignal:
-				close(messagePool)
-				return
-			default:
-				msg := getMessage()
-				if msg != "" {
-					messagePool <- msg
-				}
-			}
-		}
-	}()
 	go func() {
 		for {
 			if data > 300 {
@@ -62,15 +47,14 @@ func serve(concurrency int) {
 	}
 	for {
 		select {
-		case msg, open := <-messagePool:
-			if !open && msg == "" {
-				goto STOP
-			}
+		case <-quitSignal:
+			goto STOP
+		default:
 			<-pool
 			wg.Add(1)
 			go func() {
 				defer wg.Done()
-				workFunc(msg)
+				workFunc(getMessage())
 				pool <- struct{}{}
 			}()
 		}

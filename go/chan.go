@@ -56,8 +56,36 @@ END:
 }
 
 func main() {
+	go_main()
 	commonRecover()
 	time.Sleep(1 * time.Second)
 	fmt.Println("main loop")
 	alwaysReadFromChan()
+}
+
+func go_main() {
+	words := []string{"foo", "bar", "baz"}
+	// Create a channel for communication
+	done := make(chan bool)
+	// It is nice to close the channels, like files,
+	// after it's used or you may get leaks
+	defer close(done)
+	for _, w := range words {
+		go func(word string) {
+			// block for a sec
+			time.Sleep(1 * time.Second)
+			fmt.Println(word)
+
+			// send signal to the channel
+			done <- true
+		}(w)
+	}
+	// Do what you have to do
+	fmt.Println(1)
+	time.Sleep(1 * time.Second)
+	fmt.Println(2)
+	time.Sleep(1 * time.Second)
+	fmt.Println(3)
+	// This blocks and waits
+	<-done
 }
