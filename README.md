@@ -1,4 +1,13 @@
 # usefulscripts
 1. 一些有用的工具脚本。
-2. 每周心得笔记（后面会做成博客）。
-3. 一部分分析文章。
+    > python
+    > golang
+    > k8s
+    > bash
+2. leetcode算法题答案
+    > contest
+    > daily question
+3. 数据结构常见使用技巧
+    > array
+    > binary
+    > two pointer
