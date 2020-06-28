@@ -1,5 +1,5 @@
 #!/bin/bash
-# sudo make distclean 
+sudo make distclean 
 sudo ./configure --with-features=huge \
     --enable-multibyte \
     --enable-python3interp=yes \
