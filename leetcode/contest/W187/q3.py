@@ -1,9 +1,39 @@
 import heapq
 
 
+def longestSubarray1(A, limit):
+    if not A:
+        return 0
+    max_queue = [A[0]]
+    min_queue = [A[0]]
+    start, end = 0, 1
+    res = 0
+    while end < len(A):
+        if A[end] >= max_queue[-1]:
+            max_queue.append(A[end])
+        if A[end] <= min_queue[-1]:
+            min_queue.append(A[end])
+        end += 1
+        while max_queue[-1] - min_queue[-1] > limit:
+            if A[start] == max_queue[0]:
+                max_queue = max_queue[1:]
+            if A[start] == min_queue[0]:
+                min_queue = min_queue[1:]
+            start += 1
+            if not max_queue or not min_queue:
+                break
+        res = max(res, end - start)
+    return res
+
+    """
+    记录最大值、最小值的queue
+
+    """
+
+
 def longestSubarray(A, limit):
     """ 1438. Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit
-    给定一个数组，和一个limit，请找出这个数组的子串中最大值最小值不超过limit的最长的子串的长度。
+    给定一个数组，和一个limit，请找出这个数组的子串中最大值最小值之差不超过limit的最长的子串的长度。
     Example 1:
     Input: nums = [8,2,4,7], limit = 4
     Output: 2

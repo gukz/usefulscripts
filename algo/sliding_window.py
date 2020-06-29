@@ -117,6 +117,7 @@ def totalFruitFollowUp(tree, k):
 
 assert 4 == totalFruitFollowUp([1, 2, 2, 3, 4, 3, 3, 1], 2)
 
+
 # [30] https://leetcode.com/problems/substring-with-concatenation-of-all-words/
 # 给你一个字符串s和一个单词列表，用单词列表可以拼凑出很多字符串，找到这些字符串在s中的起始坐标
 def findSubstring(s, words):
