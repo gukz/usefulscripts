@@ -76,3 +76,11 @@ def longestSubarray(A, limit):
                 heapq.heappop(minq)
             res = max(res, i - s + 1)
     return res
+
+
+import heapq
+
+# 最小堆 从小到大
+arr = []
+heapq.heappush(arr, (0, 0))
+heapq.heappop(arr)
