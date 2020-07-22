@@ -1,0 +1,16 @@
+    spec:
+      containers:
+      - args:
+        - flask
+        - server
+        - -c
+        - gunicorn.py
+      env:
+        - name: FLASK_ENV
+          valueFrom:
+            secretKeyRef:
+              key: FLASK_ENV
+              name: watchman-secrets
+      envFrom:
+      - secretRef:
+          name: test-secret

@@ -4,15 +4,13 @@
 
 
 def round_mat(mat):
-    if not mat:
-        return []
-    rows, cols = len(mat), len(mat[0])
+    width, height = len(mat[0]), len(mat)
     res = []
-    for col in range(cols):
-        col_values = []
-        for row in range(rows - 1, -1, -1):
-            col_values.append(mat[row][col])
-        res.append(col_values)
+    for i in range(width):
+        line = []
+        for j in range(height):
+            line.append(mat[j][i])
+        res.append(list(reversed(line)))
     return res
 
 

@@ -11,3 +11,5 @@
     > array
     > binary
     > two pointer
+4. prometheus 监控报警
+   prom可以配置job，每个job链接一个exporter，可以修改、增加tag。
