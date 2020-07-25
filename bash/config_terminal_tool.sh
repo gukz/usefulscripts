@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 code() {
     # sudo passwd root
     export LC_ALL=en_US.UTF-8
@@ -31,4 +31,4 @@ code() {
     # sudo /usr/sbin/update-grub  # 清理内核后，重新生成grub文件
 }
 
-code()
+code

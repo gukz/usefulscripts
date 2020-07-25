@@ -1,5 +1,5 @@
 #!/bin/sh
-git() {
+config_git() {
     git config --global user.email "gukz@qq.com"
     git config --global user.name "gukz"
     git config --global alias.st "status -sb"
@@ -12,4 +12,4 @@ git() {
     git config --global core.editor "vim"
 }
 
-git()
+config_git

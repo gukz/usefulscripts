@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 ubuntu() {
     test -d /etc/apt/sources.list.bak || sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
     echo '''
@@ -15,4 +15,4 @@ deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted unive
 ''' > /etc/apt/sources.list
 }
 
-ubuntu()
+ubuntu
