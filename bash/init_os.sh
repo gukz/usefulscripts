@@ -24,37 +24,40 @@ EOF
 
 # Docker
 apt-get update
-apt-get -y install apt-transport-https ca-certificates curl software-properties-common
-# step 2: 安装GPG证书
-curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | apt-key add -
-# Step 3: 写入软件源信息
-add-apt-repository "deb [arch=amd64] https://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
-# Step 4: 更新并安装Docker-CE
-apt-get -y update
-apt-get -y install docker-ce
-sudo groupadd docker
-sudo gpasswd -a ${USER} docker
 
-mkdir -p /etc/systemd/system/docker.service.d
-
-cat << EOF | tee /etc/systemd/system/docker.service.d/docker.conf
+install_docker(){
+    apt-get -y install apt-transport-https ca-certificates curl software-properties-common
+    # step 2: 安装GPG证书
+    curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | apt-key add -
+    # Step 3: 写入软件源信息
+    add-apt-repository "deb [arch=amd64] https://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
+    # Step 4: 更新并安装Docker-CE
+    apt-get -y update
+    apt-get -y install docker-ce
+    sudo groupadd docker
+    sudo gpasswd -a ${USER} docker
+    
+    mkdir -p /etc/systemd/system/docker.service.d
+    
+    cat << EOF | tee /etc/systemd/system/docker.service.d/docker.conf
 [Service]
 ExecStart=
 ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2375 --containerd=/run/containerd/containerd.sock
 EOF
-
+    
 cat << EOF | tee /etc/docker/daemon.json
 {
-  "registry-mirrors": [
+"registry-mirrors": [
     "https://dockerhub.azk8s.cn",
     "https://hub-mirror.c.163.com",
     "https://registry.docker-cn.com"
   ]
 }
 EOF
-
-systemctl daemon-reload
-systemctl restart docker
+    
+    systemctl daemon-reload
+    systemctl restart docker
+}
 
 sudo apt install -y tmux
 sudo apt install -y zsh
