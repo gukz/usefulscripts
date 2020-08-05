@@ -1,6 +1,9 @@
 #!/bin/bash
-PYTHON3=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu
-test -d $PYTHON3 || exit
+PYTHON3=/usr/lib/python3.8/config-3.8-x86_64-linux-gnu
+VIMRUNTIME=/usr/share/vim/vim81
+VIMDIR=/usr/
+test -d $PYTHON3 || (echo "python dir not found" && exit)
+test -d $VIMRUNTIME || (echo "python dir not found" && exit)
 sudo apt install python3-dev
 sudo apt install make
 sudo apt install libncurses5-dev
@@ -14,6 +17,6 @@ sudo ./configure --with-features=huge \
     --disable-netbeans \
     --enable-fail-if-missing \
     --enable-cscope \
-    --prefix=/usr/local/
-sudo make VIMRUNTIMEDIR=/usr/share/vim/vim80
+    --prefix=$VIMDIR
+sudo make VIMRUNTIMEDIR=$VIMRUNTIME
 sudo make install

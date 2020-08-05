@@ -1,0 +1,5 @@
+:shared_folders:
+  - ['c:\\dev\\','/g']
+:forwarded_ports:
+  - [6379, 6379] # redis
+  - [3306, 3306] # mysql
