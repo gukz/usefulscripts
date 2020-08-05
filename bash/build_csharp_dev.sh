@@ -9,12 +9,13 @@ install_mono() {
 }
 
 install_dotnet() {
-    wget https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-    sudo dpkg -i packages-microsoft-prod.deb
-    sudo apt-get update; \
-    sudo apt-get install -y apt-transport-https && \
-    sudo apt-get update && \
-    sudo apt-get install -y dotnet-sdk-3.1
+    mkdir /csharp_runtime
+    cd /csharp_runtime
+    wget https://download.visualstudio.microsoft.com/download/pr/9eadec7a-dd7e-476d-a348-c4bf946a0bad/c11b5123931ee17faba27e5debe74731/aspnetcore-runtime-3.1.6-linux-x64.tar.gz
+    mkdir aspnetcore-runtime-3.1.6-linux-x64
+    tar -zxvf aspnetcore-runtime-3.1.6-linux-x64.tar.gz -C /csharp_runtime/aspnetcore-runtime-3.1.6-linux-x64
+    sudo rm /usr/local/bin/dotnet
+    sudo ln -sf /csharp_runtime/aspnetcore-runtime-3.1.6-linux-x64/dotnet /usr/local/bin
 }
 
 option=$1
