@@ -18,14 +18,20 @@ install_dotnet() {
     sudo ln -sf /csharp_runtime/aspnetcore-runtime-3.1.6-linux-x64/dotnet /usr/local/bin
 }
 
+link() {
+    sudo ln -s /g/usefulscripts/bash/omnisharp.sh /usr/bin/omnisharp.sh
+}
+
 option=$1
 shift
 case "$option" in 
     install_dotnet)
         install_dotnet
+        link
         ;;
     install_mono)
         install_mono
+        link
         ;;
 esac
 
