@@ -1,12 +1,10 @@
 #!/bin/bash
-PYTHON3=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu
-VIMRUNTIME=/usr/share/vim/vim82
+PYTHON3=/usr/lib/python3.8/config-3.8-x86_64-linux-gnu
+VIMRUNTIME=/usr/share/vim/vim81
 VIMDIR=/usr/
 test -d $PYTHON3 || (echo "python dir not found" && exit)
 test -d $VIMRUNTIME || (echo "vim runtime not found" && exit)
-sudo apt install python3-dev
 sudo apt install make
-sudo apt install libncurses5-dev
 sudo make distclean 
 sudo ./configure --with-features=huge \
     --enable-multibyte \

@@ -20,19 +20,30 @@ deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe 
 deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
 EOF
 }
-config_source
-sudo apt update
-sudo apt install -y tmux
-sudo apt install -y zsh
-sudo apt install -y gcc
+# sudo apt update
+install_vim() {
+    sudo add-apt-repository ppa:jonathonf/vim
+    sudo apt update
+    sudo apt install -y vim
+}
+install_vim
+exit;
+
+apt install -y tmux
+apt install -y zsh
+apt install -y gcc
 
 sudo apt install -y libmysqlclient-dev
-sudo apt install -y python3-dev
+sudo apt install -y libncurses5-dev
 sudo apt install -y silversearcher-ag
+sudo apt-get install -y libglib2.0-dev
+sudo apt-get install -y autotools-dev
+sudo apt install -y automake
 
-sudo apt install -y python3-pip
-sudo pip3 install -U python-language-server
-sudo pip3 install -U flake8
+sudo apt-get install -y python3 python-dev python3-dev build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev python-pip python3-pip
+
+pip3 install -U python-language-server
+pip3 install -U flake8
 
 sudo apt autoclean
 
@@ -53,8 +64,8 @@ config_vim() {
 config_vim
 
 config_git() {
-    git config --global user.email "gukz@qq.com"
-    git config --global user.name "gukz"
+    git config --global user.email "wanggang@microsoft.com"
+    git config --global user.name "Gang Wang"
     git config --global alias.st "status -sb"
     git config --global alias.pm "push origin master"
     git config --global alias.br "branch"
@@ -93,8 +104,8 @@ EOF
 cat << EOF | tee /etc/docker/daemon.json
 {
 "registry-mirrors": [
-    "https://dockerhub.azk8s.cn",
     "https://hub-mirror.c.163.com",
+    "https://dockerhub.azk8s.cn",
     "https://registry.docker-cn.com"
   ]
 }
@@ -103,4 +114,4 @@ EOF
     systemctl daemon-reload
     systemctl restart docker
 }
-install_docker
+# install_docker
