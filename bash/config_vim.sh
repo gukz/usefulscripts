@@ -1,6 +1,43 @@
 #!/bin/sh
 SHARE_FOLDER=/g
 
+install_docker(){
+    apt-get -y install apt-transport-https ca-certificates curl software-properties-common
+    # step 2: 安装GPG证书
+    curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | apt-key add -
+    # Step 3: 写入软件源信息
+    add-apt-repository "deb [arch=amd64] https://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
+    # Step 4: 更新并安装Docker-CE
+    apt-get -y update
+    apt-get -y install docker-ce
+    sudo groupadd docker
+    sudo gpasswd -a ${USER} docker
+    
+    mkdir -p /etc/systemd/system/docker.service.d
+    
+#     cat << EOF | tee /etc/systemd/system/docker.service.d/docker.conf
+# [Service]
+# ExecStart=
+# ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2375 --containerd=/run/containerd/containerd.sock
+# EOF
+    
+cat << EOF | tee /etc/docker/daemon.json
+{
+"registry-mirrors": [
+    "https://hub-mirror.c.163.com",
+    "https://dockerhub.azk8s.cn",
+    "https://registry.docker-cn.com"
+  ]
+}
+EOF
+    
+    systemctl daemon-reload
+    systemctl restart docker
+}
+
+install_docker
+exit;
+
 config_source() {
     test -f /etc/apt/sources.list.bak || cp /etc/apt/sources.list /etc/apt/sources.list.bak
 cat << EOF | tee /etc/apt/sources.list
@@ -27,7 +64,6 @@ install_vim() {
     sudo apt install -y vim
 }
 install_vim
-exit;
 
 apt install -y tmux
 apt install -y zsh
@@ -81,37 +117,4 @@ config_git
 compaudit | xargs chmod g-w,o-w
 
 
-install_docker(){
-    apt-get -y install apt-transport-https ca-certificates curl software-properties-common
-    # step 2: 安装GPG证书
-    curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | apt-key add -
-    # Step 3: 写入软件源信息
-    add-apt-repository "deb [arch=amd64] https://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
-    # Step 4: 更新并安装Docker-CE
-    apt-get -y update
-    apt-get -y install docker-ce
-    sudo groupadd docker
-    sudo gpasswd -a ${USER} docker
-    
-    mkdir -p /etc/systemd/system/docker.service.d
-    
-    cat << EOF | tee /etc/systemd/system/docker.service.d/docker.conf
-[Service]
-ExecStart=
-ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2375 --containerd=/run/containerd/containerd.sock
-EOF
-    
-cat << EOF | tee /etc/docker/daemon.json
-{
-"registry-mirrors": [
-    "https://hub-mirror.c.163.com",
-    "https://dockerhub.azk8s.cn",
-    "https://registry.docker-cn.com"
-  ]
-}
-EOF
-    
-    systemctl daemon-reload
-    systemctl restart docker
-}
-# install_docker
+install_docker
