@@ -109,7 +109,7 @@ config_git() {
     git config --global alias.cma "commit --amend"
     git config --global alias.cm "commit -m"
     git config --global alias.rb "rebase"
-    git config --global core.editor "vim"
+    git config --global core.editor "vim --noplugin"
 }
 
 config_git
