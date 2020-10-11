@@ -2,7 +2,8 @@ import yaml
 import requests
 
 
-cookie = """"""
+cookie = """
+"""
 cookie_dict = {}
 for c in cookie.split("; "):
     c = c.strip()
@@ -65,8 +66,9 @@ def output(contests):
         ...
     ]
     """
-    file_path = "test.md"
+    file_path = "Readme.md"
     with open(file_path, "w") as fi:
+        fi.write("# All unsolved question")
         for cont in contests:
             fi.write(f"## [{cont['title']}]({cont['url']})\n")
             for q in cont["quest"]:
@@ -78,7 +80,8 @@ def output(contests):
 
 allContests = get_all_contest()
 print(len(allContests))
-
+# TODO give a question list and solve status for each question, 
+# not only contest status
 result = []
 for contest in allContests[2:]:
     titleSlug = contest["titleSlug"]
