@@ -7,6 +7,8 @@ protos/
 *.json
 *.out
 *.log
+*.html
+*.tar.gz
 secret/
 .vagrant/
 
