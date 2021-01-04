@@ -21,7 +21,7 @@ install_docker(){
 # ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2375 --containerd=/run/containerd/containerd.sock
 # EOF
     
-cat << EOF | tee /etc/docker/daemon.json
+    cat << EOF | tee /etc/docker/daemon.json
 {
 "registry-mirrors": [
     "https://hub-mirror.c.163.com",
@@ -35,12 +35,11 @@ EOF
     systemctl restart docker
 }
 
-install_docker
-exit;
+# install_docker
 
 config_source() {
     test -f /etc/apt/sources.list.bak || cp /etc/apt/sources.list /etc/apt/sources.list.bak
-cat << EOF | tee /etc/apt/sources.list
+    cat << EOF | tee /etc/apt/sources.list
 deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
 deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
 
@@ -57,13 +56,20 @@ deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe 
 deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
 EOF
 }
-# sudo apt update
+
 install_vim() {
     sudo add-apt-repository ppa:jonathonf/vim
     sudo apt update
     sudo apt install -y vim
 }
-install_vim
+# install_vim
+
+sudo apt update
+
+# Lab
+sudo apt install -y qemu
+git clone --recursive https://github.com/riscv/riscv-gnu-toolchain
+
 
 apt install -y tmux
 apt install -y zsh
@@ -71,7 +77,10 @@ apt install -y gcc
 
 sudo apt install -y libmysqlclient-dev
 sudo apt install -y libncurses5-dev
-sudo apt install -y silversearcher-ag
+# sudo apt install -y silversearcher-ag
+curl -LO https://github.com/BurntSushi/ripgrep/releases/download/12.1.1/ripgrep_12.1.1_amd64.deb
+sudo dpkg -i ripgrep_12.1.1_amd64.deb
+
 sudo apt-get install -y libglib2.0-dev
 sudo apt-get install -y autotools-dev
 sudo apt install -y automake
@@ -93,10 +102,10 @@ config_vim() {
     rm -rf ~/.vimrc
     rm -rf ~/.zshrc
     rm -rf ~/.tmux.conf
-    ln -s $SHARE_FOLDER/vim_config ~/.vim
-    ln -s $SHARE_FOLDER/vim_config/vimrc ~/.vimrc
-    ln -s $SHARE_FOLDER/vim_config/zshrc ~/.zshrc
-    ln -s $SHARE_FOLDER/vim_config/tmux.conf ~/.tmux.conf
+    ln -s $SHARE_FOLDER/vimfiles ~/.vim
+    ln -s $SHARE_FOLDER/vimfiles/vimrc ~/.vimrc
+    ln -s $SHARE_FOLDER/vimfiles/zshrc ~/.zshrc
+    ln -s $SHARE_FOLDER/vimfiles/tmux.conf ~/.tmux.conf
     chsh -s /bin/zsh
 }
 config_vim
@@ -114,9 +123,6 @@ config_git() {
     git config --global core.editor "vim --noplugin"
 }
 
-config_git
+# config_git
 
 compaudit | xargs chmod g-w,o-w
-
-
-install_docker

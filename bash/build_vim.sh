@@ -1,6 +1,6 @@
 #!/bin/bash
-PYTHON3=/usr/lib/python3.8/config-3.8-x86_64-linux-gnu
-VIMRUNTIME=/usr/share/vim/vim81
+PYTHON3=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu
+VIMRUNTIME=/usr/share/vim/vim80
 VIMDIR=/usr/
 test -d $PYTHON3 || (echo "python dir not found" && exit)
 test -d $VIMRUNTIME || (echo "vim runtime not found" && exit)
