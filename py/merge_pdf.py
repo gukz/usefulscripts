@@ -13,13 +13,13 @@ merger = PdfFileMerger()
 
 
 def handler(p):
-    if p.endswith(".pdf"):
+    if p.endswith(".pdf") and "?" in p:
         merger.append(open(p, "rb"))
 
 
-def merge(mypath):
+def merge(mypath, merged_name="merged"):
     walk_files(mypath, handler)
-    with open('merged.pdf', "wb") as fout:
+    with open(f'{merged_name}.pdf', "wb") as fout:
         merger.write(fout)
 
 
